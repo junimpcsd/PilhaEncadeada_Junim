@@ -26,6 +26,7 @@ public class PilhaE implements interfacePilhaEncadeada{
     public void limpar() {
         tamanho = 0;
         topo = null;
+        System.out.println("Pilha esvaziada!");
     }
 
     @Override
