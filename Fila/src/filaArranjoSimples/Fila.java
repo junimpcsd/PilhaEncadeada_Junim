@@ -11,6 +11,7 @@ public class Fila implements interfaceFilaASimples {
     public void criarFila(int tamanho) {
         fila = new NoVS[tamanho];
         capacidade = tamanho;
+        System.out.println("Fila criada.");
     }
 
     @Override
@@ -33,9 +34,10 @@ public class Fila implements interfaceFilaASimples {
         if (!eCheia()) {
             NoVS elemento = new NoVS(valor);
             fila[fim++] = elemento;
+            System.out.println("Elemento "+valor+" adicionado.");
             return elemento;
         }
-        System.out.println("Fila cheia");
+        System.out.println("A fila está cheia.");
         return null;
     }
 
@@ -44,9 +46,10 @@ public class Fila implements interfaceFilaASimples {
         if (!eVazia()) {
             NoVS aux = fila[inicio];
             fila[inicio++] = null;
+            System.out.println("Elemento "+aux.getValor()+" retirado.");
             return aux;
         }
-        System.out.println("Fila não possui elementos");
+        System.out.println("A fila não possui elementos.");
         return null;
     }
 
