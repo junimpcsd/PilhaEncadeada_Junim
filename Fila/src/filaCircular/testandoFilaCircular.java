@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package filaArranjoSimples;
+package filaCircular;
 
 /**
  *
  * @author Junim
  */
-public class testandoFilaASimples extends javax.swing.JFrame {
+public class testandoFilaCircular extends javax.swing.JFrame {
 
     /**
      * Creates new form testandoFilaASimples
      */
     Fila fila1;
-    public testandoFilaASimples() {
+    public testandoFilaCircular() {
         initComponents();
         fila1 = new Fila();
     }
@@ -179,20 +179,21 @@ public class testandoFilaASimples extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(testandoFilaASimples.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(testandoFilaCircular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(testandoFilaASimples.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(testandoFilaCircular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(testandoFilaASimples.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(testandoFilaCircular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(testandoFilaASimples.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(testandoFilaCircular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new testandoFilaASimples().setVisible(true);
+                new testandoFilaCircular().setVisible(true);
             }
         });
     }
