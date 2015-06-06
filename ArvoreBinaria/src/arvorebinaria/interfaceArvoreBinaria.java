@@ -14,9 +14,9 @@ public interface interfaceArvoreBinaria {
     
     void removerRec(int valor, char tipo); //remover um nó da árvore de forma recursiva
 
-    void preOrdemItr();  //percorre a árvore na pré-ordem de forma iterativa  (usando pilha)    
+    void preOrdemItr(NoArvore no);  //percorre a árvore na pré-ordem de forma iterativa  (usando pilha)    
 
-    void posOrdemItr();  //percorre a árvore na pos-ordem de forma iterativa  (usando pilha)      
+    void posOrdemItr(NoArvore no);  //percorre a árvore na pos-ordem de forma iterativa  (usando pilha)      
 
-    void inOrdemItr();  //percorre a árvore na em-ordem de forma iterativa  (usando pilha)   
+    void inOrdemItr(NoArvore No);  //percorre a árvore na em-ordem de forma iterativa  (usando pilha)   
 }
