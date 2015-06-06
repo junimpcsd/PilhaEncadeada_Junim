@@ -53,7 +53,7 @@ public class ArvoreBin implements interfaceArvoreBinaria{
        if(no != null){
         System.out.print(no.getChave());
          preOrdemItr(no.getEsquerda());
-         preOrdem(no.getDireita());
+         preOrdemItr(no.getDireita());
          } 
     }
 
