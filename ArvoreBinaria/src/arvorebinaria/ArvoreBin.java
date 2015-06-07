@@ -53,6 +53,11 @@ public class ArvoreBin implements interfaceArvoreBinaria{
 
     @Override
     public void inserirItr(int valor) {
+        
+    }
+
+    @Override
+    public void inserirRec(int valor) {
         NoArvore aux = raiz;
         if (aux != null){
             if (valor < aux.getChave()){
@@ -74,12 +79,12 @@ public class ArvoreBin implements interfaceArvoreBinaria{
     }
 
     @Override
-    public void inserirRec(int valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removerItr(int valor) {
+        
     }
 
     @Override
-    public void removerItr(int valor) {
+    public void removerRec(int valor) {
         NoArvore aux = raiz;
         if(aux == null){
             System.out.println("Árvore vazia!");
@@ -98,11 +103,6 @@ public class ArvoreBin implements interfaceArvoreBinaria{
                 aux = (aux.getEsquerda() != null) ? aux.getEsquerda() : aux.getDireita();  
             }  
         }
-    }
-
-    @Override
-    public void removerRec(int valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
