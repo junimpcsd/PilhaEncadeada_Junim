@@ -15,36 +15,48 @@ public class ArvoreBin implements interfaceArvoreBinaria{
     
     @Override
     public NoArvore raiz() {
-       raiz = new NoArvore(15);  
-       
-       return raiz;
+        return raiz;
     }
 
     @Override
     public NoArvore buscar(int valor) {
         NoArvore inter = raiz;
-        if (valor != 0) {  
-            while (Integer.parseInt(inter.getEsquerda().toString()) != 0) {  
+        if (valor != 0) {
+            if(inter.getChave() == valor){
+               return inter;
+            }  
+            
+            if(Integer.parseInt(inter.getEsquerda().toString()) < valor){
+                buscar(Integer.parseInt(inter.getEsquerda().toString()));
+            }  else if(Integer.parseInt(inter.getEsquerda().toString()) == valor){
+                inter = inter.getEsquerda();
+                return inter;
+            }
+            
+            if(Integer.parseInt(inter.getDireita().toString()) > valor){
+                buscar(Integer.parseInt(inter.getDireita().toString()));
+            }  else if(Integer.parseInt(inter.getDireita().toString()) == valor){
+                inter = inter.getDireita();
+                return inter;
+            }
+            
+            /*while (inter.getEsquerda() != null) {
                 if(Integer.parseInt(inter.getEsquerda().toString()) < valor){
                     inter = inter.getEsquerda();
                 }  else if(Integer.parseInt(inter.getEsquerda().toString()) == valor){
                     inter = inter.getEsquerda();
-                    System.out.println("Valor encontrado!");
                     return inter;
                 }
             }  
-            while (Integer.parseInt(inter.getDireita().toString()) != 0) {
+            while (inter.getDireita() != null) {
                 if(Integer.parseInt(inter.getDireita().toString()) > valor){
-                    inter = inter.getEsquerda();
+                    inter = inter.getDireita();
                 }  else if(Integer.parseInt(inter.getDireita().toString()) == valor){
                     inter = inter.getDireita();
-                    System.out.println("Valor encontrado!");
                     return inter;
                 }
-            }
-            if(inter.getChave() == valor){
-                    return inter;
-            }
+            }*/
+            
         } else {
             System.out.println("Valor inválido!");
         }
@@ -62,19 +74,22 @@ public class ArvoreBin implements interfaceArvoreBinaria{
         if (aux != null){
             if (valor < aux.getChave()){
                 if (aux.getEsquerda() != null) { 
-                   inserirItr(Integer.parseInt(aux.getEsquerda().toString())); 
+                   inserirRec(Integer.parseInt(aux.getEsquerda().toString())); 
                 } else { 
                    aux.setEsquerda(new NoArvore(valor)); 
+                    System.out.println(valor+" inserido à esquerda de: "+aux.getChave());
                 } 
             } else if (valor > aux.getChave()){
                 if (aux.getDireita() != null) { 
-                   inserirItr(Integer.parseInt(aux.getDireita().toString())); 
+                   inserirRec(Integer.parseInt(aux.getDireita().toString())); 
                 } else { 
                    aux.setDireita(new NoArvore(valor)); 
+                   System.out.println(valor+" inserido à direita de: "+aux.getChave());
                 } 
             }
         } else {
              raiz = new NoArvore(valor);
+             System.out.println("Árvore criada com a raiz: "+valor);
         }
     }
 
@@ -90,9 +105,9 @@ public class ArvoreBin implements interfaceArvoreBinaria{
             System.out.println("Árvore vazia!");
         } else {            
             if(valor < aux.getChave()){
-                removerItr(Integer.parseInt(aux.getEsquerda().toString()));
+                removerRec(Integer.parseInt(aux.getEsquerda().toString()));
             } else if(valor > aux.getChave()){
-                removerItr(Integer.parseInt(aux.getDireita().toString()));
+                removerRec(Integer.parseInt(aux.getDireita().toString()));
             } else if (aux.getEsquerda() != null && aux.getDireita() != null) {
                 /*2 filhos*/  
                 System.out.println("Removido o nó: " + aux.getChave());
