@@ -10,9 +10,9 @@ public interface interfaceArvoreBinaria {
     
     void inserirRec(int valor); //adiciona um novo nó na árvore de forma iterativa (while)
 
-    void removerItr(int valor, char tipo); //remover um nó da árvore de forma iterativa (while)
+    void removerItr(int valor); //remover um nó da árvore de forma iterativa (while)
     
-    void removerRec(int valor, char tipo); //remover um nó da árvore de forma recursiva
+    void removerRec(int valor); //remover um nó da árvore de forma recursiva
 
     void preOrdemItr(NoArvore no);  //percorre a árvore na pré-ordem de forma iterativa  (usando pilha)    
 
