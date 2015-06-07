@@ -21,56 +21,67 @@ public class ArvoreBin implements interfaceArvoreBinaria{
     @Override
     public NoArvore buscar(int valor) {
         NoArvore inter = raiz;
-        if (valor != 0) {
-            if(inter.getChave() == valor){
-               return inter;
-            }  
-            
-            if(Integer.parseInt(inter.getEsquerda().toString()) < valor){
-                buscar(Integer.parseInt(inter.getEsquerda().toString()));
-            }  else if(Integer.parseInt(inter.getEsquerda().toString()) == valor){
-                inter = inter.getEsquerda();
-                return inter;
-            }
-            
-            if(Integer.parseInt(inter.getDireita().toString()) > valor){
-                buscar(Integer.parseInt(inter.getDireita().toString()));
-            }  else if(Integer.parseInt(inter.getDireita().toString()) == valor){
-                inter = inter.getDireita();
-                return inter;
-            }
-            
-            /*while (inter.getEsquerda() != null) {
-                if(Integer.parseInt(inter.getEsquerda().toString()) < valor){
-                    inter = inter.getEsquerda();
-                }  else if(Integer.parseInt(inter.getEsquerda().toString()) == valor){
-                    inter = inter.getEsquerda();
+        while (inter != null){
+                if (valor == inter.getChave()){
                     return inter;
                 }
-            }  
-            while (inter.getDireita() != null) {
-                if(Integer.parseInt(inter.getDireita().toString()) > valor){
-                    inter = inter.getDireita();
-                }  else if(Integer.parseInt(inter.getDireita().toString()) == valor){
-                    inter = inter.getDireita();
-                    return inter;
+                if (valor < inter.getChave()){
+                    System.out.println(valor+" encontrado! À sua esquerda está "+inter.getChave());
+                    inter = inter.getEsquerda(); // Anda para a esquerda.
+                } else {
+                    System.out.println(valor+" encontrado! À sua direita está "+inter.getChave());
+                    inter = inter.getDireita(); // Anda para a direita.
                 }
-            }*/
-            
-        } else {
-            System.out.println("Valor inválido!");
-        }
+            }
             return null;
         } 
 
     @Override
     public void inserirItr(int valor) {
-        
+        NoArvore no = new NoArvore(valor);
+        no.setEsquerda(null);
+        no.setDireita(null);
+
+        // Verificar se árvore está vazia
+        if(raiz == null){
+            raiz = no; // Inseriu
+            System.out.println("Árvore criada com a raiz: "+valor);
+            return;
+        }
+        //Andar nos Nós
+        NoArvore noTemporario = raiz;
+        while (noTemporario != null){
+            if(valor == noTemporario.getChave()){
+                System.out.println("Esse nó já existe!");
+                return; // Nó já existe!! Abandona.
+            }
+            if(valor < noTemporario.getChave()){
+                // Verificar lado esquerdo
+                if (noTemporario.getEsquerda() == null){
+                    System.out.println(valor+" inserido à esquerda de: "+noTemporario.getChave());
+                    no.setChave(valor);
+                    noTemporario.setEsquerda(no); // Insere na esquerda.
+                    return;
+                }
+                noTemporario = noTemporario.getEsquerda(); // Anda para a esquerda.
+            } else {
+                // Verificar lado direito.
+                if(noTemporario.getDireita() == null){
+                    System.out.println(valor+" inserido à direita de: "+noTemporario.getChave());
+                    no.setChave(valor);
+                    noTemporario.setDireita(no); // Insere na direita.
+ 
+                    return;
+                }
+                noTemporario = noTemporario.getDireita(); // Anda para a direita.
+            }
+        }
     }
 
     @Override
     public void inserirRec(int valor) {
         NoArvore aux = raiz;
+        
         if (aux != null){
             if (valor < aux.getChave()){
                 if (aux.getEsquerda() != null) { 
