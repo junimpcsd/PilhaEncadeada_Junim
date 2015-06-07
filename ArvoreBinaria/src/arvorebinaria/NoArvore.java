@@ -5,7 +5,7 @@ public class NoArvore {
     private NoArvore direita;
 
     public NoArvore(int chave) {
-        this.chave = chave  ;
+        this.chave = chave;
         this.esquerda = null;
         this.direita = null;
     }
