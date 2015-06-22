@@ -101,6 +101,11 @@ public class TestandoArvoreBinaria extends javax.swing.JFrame {
         jLabel4.setText("Remover iterativamente:");
 
         jButton5.setText("Ok");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Pré-ordem iterativa:");
 
@@ -253,7 +258,7 @@ public class TestandoArvoreBinaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //farinha.removerRec(Integer.parseInt(remRec.getText()));
+        farinha.removerRec(Integer.parseInt(remRec.getText()), farinha.raiz());
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -271,6 +276,10 @@ public class TestandoArvoreBinaria extends javax.swing.JFrame {
     private void inRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inRecActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inRecActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        farinha.removerItr(Integer.parseInt(jTextField4.getText()));
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
