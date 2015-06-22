@@ -176,6 +176,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="inRec">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inRecActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
