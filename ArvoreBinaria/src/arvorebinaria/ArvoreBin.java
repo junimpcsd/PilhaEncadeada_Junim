@@ -16,8 +16,31 @@ public class ArvoreBin implements interfaceArvoreBinaria{
     @Override
     public NoArvore raiz() {
         return raiz;
-    }
+    } // Pega a raiz, ok
 
+    public NoArvore Pai(NoArvore val){
+        NoArvore Pai = null;
+        NoArvore orfao = raiz;
+        
+        while(orfao != null){
+            if(orfao == val){
+                System.out.println("Pai encontrado!");
+                return Pai;
+            }
+            
+            if(val.getChave() > orfao.getChave()){
+                Pai = orfao;
+                orfao = orfao.getDireita();
+            }
+            
+            if(val.getChave() < orfao.getChave()){
+                Pai = orfao;
+                orfao = orfao.getEsquerda();
+            }
+        }
+        return Pai;
+    } // Encontrar pai, ok
+    
     @Override
     public NoArvore buscar(int valor) {
         NoArvore inter = raiz;
@@ -34,7 +57,7 @@ public class ArvoreBin implements interfaceArvoreBinaria{
                 }
             }
             return null;
-        } 
+        } // Busca, ok
 
     @Override
     public void inserirItr(int valor) {
@@ -76,41 +99,107 @@ public class ArvoreBin implements interfaceArvoreBinaria{
                 noTemporario = noTemporario.getDireita(); // Anda para a direita.
             }
         }
-    }
+    } // Insere iterativamente, com o While, ok
 
     @Override
-    public void inserirRec(int valor) {
-        NoArvore aux = raiz;
-        
-        if (aux != null){
-            if (valor < aux.getChave()){
-                if (aux.getEsquerda() != null) { 
-                   inserirRec(Integer.parseInt(aux.getEsquerda().toString())); 
-                } else { 
-                   aux.setEsquerda(new NoArvore(valor)); 
-                    System.out.println(valor+" inserido à esquerda de: "+aux.getChave());
-                } 
-            } else if (valor > aux.getChave()){
-                if (aux.getDireita() != null) { 
-                   inserirRec(Integer.parseInt(aux.getDireita().toString())); 
-                } else { 
-                   aux.setDireita(new NoArvore(valor)); 
-                   System.out.println(valor+" inserido à direita de: "+aux.getChave());
-                } 
-            }
-        } else {
-             raiz = new NoArvore(valor);
-             System.out.println("Árvore criada com a raiz: "+valor);
+    public void inserirRec(int valor, NoArvore val) {
+        NoArvore no = new NoArvore(valor);
+        no.setEsquerda(null);
+        no.setDireita(null);
+
+        // Verificar se árvore está vazia
+        if(raiz == null){
+            raiz = no; // Inserido
+            System.out.println("Árvore criada com a raiz: "+valor);
+            return;
         }
-    }
+        //Andar nos Nós
+        
+        if(val == null){
+            System.out.println("Fail, o Nó não pode ser nulo.");
+            return;
+        }
+        
+        if (val.getChave() == valor) {
+            System.out.println("Esse no ja existe!");
+        }
+        
+        if (valor < val.getChave()) {
+            if (val.getEsquerda() == null) {
+                System.out.println(valor+" inserido à esquerda de: "+val.getChave());
+                val.setEsquerda(no);
+            } else {
+                inserirRec(valor, val.getEsquerda());
+            }
+        } 
+        
+        if (valor > val.getChave()) {
+            if (val.getDireita() == null) {
+                System.out.println(valor+" inserido à direita de: "+val.getChave());
+                val.setDireita(no);
+            } else {
+                inserirRec(valor, val.getDireita());
+            }
+        }
+        //raiz = noTemporario;
+    } // Insere recursivamente, com recursividade, ok
 
     @Override
     public void removerItr(int valor) {
+        System.out.println("Removendo: "+valor+", aguarde...");
+        NoArvore pai = null;
+        NoArvore val = buscar(valor);
         
+        if(val == null){
+            System.out.println("Valor não encontrado.");
+        }
+        
+        if(val != null && val.getChave() == valor){
+            pai = Pai(val);
+            
+            if (val.getDireita() == null && val.getEsquerda() == null) { 
+                solto(val);
+            }
+            
+            if (val.getDireita() == null || val.getEsquerda() == null) { 
+                filhoUnico(val);
+            } 
+            
+            if (val.getDireita() == null && val.getEsquerda() == null){
+                casalDeFilhos(val);
+            }
+        }
     }
 
+    // Verifica se o
+    public void solto(NoArvore nomePretendido){
+        NoArvore pai = Pai(nomePretendido);
+
+        if (nomePretendido == raiz) {
+            raiz = null;
+            return;
+        }
+
+        if (nomePretendido.getDireita() == null && nomePretendido.getEsquerda() == null) { 
+            if (nomePretendido.getChave() < pai.getChave()){
+                pai.setEsquerda(null);
+            } 
+            if (nomePretendido.getChave() > pai.getChave()){
+                pai.setDireita(null);
+            }
+        }
+    }
+    
+    public void filhoUnico(NoArvore nome){
+        
+    }
+    
+    public void casalDeFilhos(NoArvore duplaSertaneja){
+        
+    }
+  /*
     @Override
-    public void removerRec(int valor) {
+    public void removerRec(int valor, char tipo) {
         NoArvore aux = raiz;
         if(aux == null){
             System.out.println("Árvore vazia!");
@@ -120,7 +209,7 @@ public class ArvoreBin implements interfaceArvoreBinaria{
             } else if(valor > aux.getChave()){
                 removerRec(Integer.parseInt(aux.getDireita().toString()));
             } else if (aux.getEsquerda() != null && aux.getDireita() != null) {
-                /*2 filhos*/  
+              
                 System.out.println("Removido o nó: " + aux.getChave());
                 aux.setChave(Integer.parseInt(aux.getDireita().toString()));
                 aux.setDireita(aux.getDireita());
@@ -130,7 +219,7 @@ public class ArvoreBin implements interfaceArvoreBinaria{
             }  
         }
     }
-
+   */
     @Override
     public void preOrdemItr(NoArvore no) {
        if(no != null){
@@ -156,6 +245,11 @@ public class ArvoreBin implements interfaceArvoreBinaria{
             System.out.print(No.getChave());
             preOrdemItr(No.getDireita());
         }
+    }
+
+    @Override
+    public void removerRec(int valor, char tipo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
