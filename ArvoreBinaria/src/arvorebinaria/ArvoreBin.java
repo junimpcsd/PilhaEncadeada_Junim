@@ -43,21 +43,30 @@ public class ArvoreBin implements interfaceArvoreBinaria{
     
     @Override
     public NoArvore buscar(int valor) {
-        NoArvore inter = raiz;
-        while (inter != null){
-                if (valor == inter.getChave()){
-                    return inter;
-                }
-                if (valor < inter.getChave()){
-                    System.out.println(valor+" encontrado! À sua esquerda está "+inter.getChave());
-                    inter = inter.getEsquerda(); // Anda para a esquerda.
-                } else {
-                    System.out.println(valor+" encontrado! À sua direita está "+inter.getChave());
-                    inter = inter.getDireita(); // Anda para a direita.
-                }
+        NoArvore aux = raiz;
+        NoArvore aux1;
+        while (aux != null){
+            if (valor == aux.getChave()){
+                return aux;
             }
-            return null;
-        } // Busca, ok
+
+            if (valor < aux.getChave()){
+                aux1 = aux;
+                System.out.println(valor+" encontrado! À sua esquerda está "+aux.getChave());
+                aux = aux.getEsquerda(); // Anda para a esquerda.
+            } else {
+                aux1 = aux;
+                System.out.println(valor+" encontrado! À sua direita está "+aux.getChave());
+                aux = aux.getDireita(); // Anda para a direita.
+            }
+
+            if(aux == null){
+                return aux1;
+            }
+            return aux;
+        }
+        return null;
+    } // Busca, ok
 
     @Override
     public void inserirItr(int valor) {
@@ -144,37 +153,48 @@ public class ArvoreBin implements interfaceArvoreBinaria{
         //raiz = noTemporario;
     } // Insere recursivamente, com recursividade, ok
 
+    // Removendo iterativamente, ok
     @Override
     public void removerItr(int valor) {
-        System.out.println("Removendo: "+valor+", aguarde...");
-        NoArvore pai = null;
+        System.out.println("Removendo "+valor+", aguarde...");
         NoArvore val = buscar(valor);
         
         if(val == null){
             System.out.println("Valor não encontrado.");
+            return;
         }
         
-        if(val != null && val.getChave() == valor){
-            pai = Pai(val);
-            
+        if(val.getChave() == valor){   
             if (val.getDireita() == null && val.getEsquerda() == null) { 
-                solto(val);
+                semFilho(val);
+                System.out.println(valor+" não tem filhos, removido!");
+                return;
             }
             
-            if (val.getDireita() == null || val.getEsquerda() == null) { 
-                filhoUnico(val);
+            if (val.getDireita() != null && val.getEsquerda() != null){
+                System.out.println("O "+valor+" elemento tinha 2 filhos, ");
+                doisFilhos(val);
+                return;
+            }
+            
+            if (val.getDireita() != null) { 
+                System.out.println(valor+" tem 1 filho à direita, e ele herdará o lugar do pai!");
+                umFilho(val);
+                return;
             } 
             
-            if (val.getDireita() == null && val.getEsquerda() == null){
-                casalDeFilhos(val);
+            if (val.getEsquerda() != null){
+                System.out.println(valor+" tem 1 filho à esquerda e ele herdará o lugar do pai!");
+                umFilho(val);
             }
         }
     }
 
-    // Verifica se o
-    public void solto(NoArvore nomePretendido){
+    // Matarei o pai sem filhos, ok
+    public void semFilho(NoArvore nomePretendido){
         NoArvore pai = Pai(nomePretendido);
 
+        // Se a raiz for nula, é para retornar zero.
         if (nomePretendido == raiz) {
             raiz = null;
             return;
@@ -190,66 +210,129 @@ public class ArvoreBin implements interfaceArvoreBinaria{
         }
     }
     
-    public void filhoUnico(NoArvore nome){
+    // Matarei o pai, mas manterei o filho, ok
+    public void umFilho(NoArvore nome){
+        NoArvore pai = Pai(nome);
         
+        if (nome == raiz) {
+            if (nome.getEsquerda() != null && nome.getDireita() == null) {
+                raiz = raiz.getEsquerda();
+            } 
+            if (nome.getDireita() != null && nome.getEsquerda() == null) {
+                raiz = raiz.getDireita();
+            }
+            System.out.println("Removido!");
+            return;
+        }
+        
+        if (nome.getEsquerda() == null && nome.getDireita() != null) { 
+            if (nome.getChave() < pai.getChave()) {
+                pai.setEsquerda(nome.getDireita());
+            } 
+            if (nome.getChave() > pai.getChave()) {
+                pai.setDireita(nome.getDireita());
+            }
+            System.out.println("Direita movida para o pai!");
+            return;
+        } 
+        
+        if (nome.getEsquerda() != null && nome.getDireita() == null) {
+            if (nome.getChave() < pai.getChave()) {
+                pai.setEsquerda(nome.getEsquerda());
+            } 
+            if (nome.getChave() > pai.getChave()) {
+                pai.setDireita(nome.getEsquerda());
+            }
+            System.out.println("Esquerda movido para o pai!");
+        }
     }
     
-    public void casalDeFilhos(NoArvore duplaSertaneja){
-        
-    }
-  /*
-    @Override
-    public void removerRec(int valor, char tipo) {
-        NoArvore aux = raiz;
-        if(aux == null){
-            System.out.println("Árvore vazia!");
-        } else {            
-            if(valor < aux.getChave()){
-                removerRec(Integer.parseInt(aux.getEsquerda().toString()));
-            } else if(valor > aux.getChave()){
-                removerRec(Integer.parseInt(aux.getDireita().toString()));
-            } else if (aux.getEsquerda() != null && aux.getDireita() != null) {
-              
-                System.out.println("Removido o nó: " + aux.getChave());
-                aux.setChave(Integer.parseInt(aux.getDireita().toString()));
-                aux.setDireita(aux.getDireita());
-            } else {  
-                System.out.println("Removido o nó: " + aux.getChave());  
-                aux = (aux.getEsquerda() != null) ? aux.getEsquerda() : aux.getDireita();  
-            }  
-        }
-    }
-   */
-    @Override
-    public void preOrdemItr(NoArvore no) {
-       if(no != null){
-            System.out.print(no.getChave()+" ");
-            preOrdemItr(no.getEsquerda());
-            preOrdemItr(no.getDireita());
-        }
-    }
+    // Essa função vai descer toda a direita, ok
+    public NoArvore desceTodaDireita(NoArvore val){
+        NoArvore aux2 = val;
+        NoArvore aux1 = null;
 
-    @Override
-    public void posOrdemItr(NoArvore no) {
-        if(no != null){
-            posOrdemItr(no.getEsquerda());
-            posOrdemItr(no.getDireita());
-            System.out.print(no.getChave()+" ");
+        while (aux2 != null) {
+            aux1 = aux2;
+            aux2 = aux2.getDireita();
         }
-    }
-
-    @Override
-    public void inOrdemItr(NoArvore No) {
-        if(No != null){
-            preOrdemItr(No.getEsquerda());
-            System.out.print(No.getChave());
-            preOrdemItr(No.getDireita());
-        }
-    }
-
-    @Override
-    public void removerRec(int valor, char tipo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return aux1;
     }
     
+    // Matarei o pai, mas manterei vivo os filhos, ok
+    public void doisFilhos (NoArvore duplaSertaneja){
+        NoArvore pai = Pai(duplaSertaneja);
+
+        NoArvore aux = desceTodaDireita(duplaSertaneja.getEsquerda());
+        aux.setDireita(duplaSertaneja.getDireita());
+        aux.setEsquerda(duplaSertaneja.getEsquerda());
+
+        NoArvore pai2 = Pai(aux);
+
+        if (pai2 != null) {
+            pai2.setDireita(null);
+        }
+
+        if (duplaSertaneja == raiz) {
+            raiz = aux;
+            return;
+        }
+
+        // Se o valor a ser removido for menor
+        // que o valor do pai, então o filho à esquerda
+        // será o pai, e o filho da direita permanecerá
+        // no seu canto.
+        if (duplaSertaneja.getChave() < pai.getChave()) {
+            pai.setEsquerda(aux);  
+        } 
+        
+        // Se o valor a ser removido for maior
+        // que o valor do pai, então o filho à direita
+        // será o pai, e o filho da esquerda permanecerá
+        // no seu canto.
+        if (duplaSertaneja.getChave() > pai.getChave()) {
+            pai.setDireita(aux);
+        }
+    }
+    
+    // Removendo recursivamente, ok
+    @Override
+    public void removerRec(int valor, NoArvore val) {        
+        if(val == null){
+            System.out.println(valor+" não encontrado!");
+            return;
+        }
+        
+        if(valor < val.getChave()){
+            removerRec(valor, val.getEsquerda());
+        } else if(valor > val.getChave()){
+            removerRec(valor, val.getDireita());
+        }
+
+        if(valor == val.getChave()){
+            if (val.getEsquerda() != null && val.getDireita() != null) {
+                doisFilhos(val);
+            } else if (val.getEsquerda() != null || val.getDireita() != null) {  
+                umFilho(val);
+            }  else {
+                semFilho(val);
+            }
+             System.out.println(valor+" removido.");
+        }
+    }
+   
+    @Override
+    public void preOrdemItr() {
+       
+    }
+
+    @Override
+    public void posOrdemItr() {
+        
+    }
+
+    @Override
+    public void inOrdemItr() {
+        
+    }
 }
